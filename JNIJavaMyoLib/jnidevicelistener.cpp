@@ -80,7 +80,7 @@ jobject JniDeviceListener::createJavaObjectFromArm(myo::Arm arm){
 			armType = "ARM_LEFT";
 			break;
 		case myo::Arm::armRight:
-			armType = "ARM_LEFT";
+			armType = "ARM_RIGHT";
 			break;
 		case myo::Arm::armUnknown:
 		default:
