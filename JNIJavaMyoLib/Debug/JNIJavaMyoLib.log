@@ -1,0 +1,21 @@
+﻿Build started 8/1/2014 10:10:21 PM.
+     1>Project "C:\Users\Nicholas\Documents\Visual Studio 2010\Projects\JNIJavaMyoLib\JNIJavaMyoLib\JNIJavaMyoLib.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\JNIJavaMyoLib.unsuccessfulbuild".
+       GenerateTargetFrameworkMonikerAttribute:
+       Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nicholas\Documents\Visual Studio 2010\Projects\JNIJavaMyoLib\Debug\JNIJavaMyoLib.dll" /INCREMENTAL /NOLOGO /LIBPATH:\lib myo64.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\JNIJavaMyoLib.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Nicholas\Documents\Visual Studio 2010\Projects\JNIJavaMyoLib\Debug\JNIJavaMyoLib.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /DLL Debug\com_thalmic_myo_Hub.obj
+         Debug\com_thalmic_myo_Myo.obj
+         Debug\handle.obj
+         Debug\jnidevicelistener.obj
+         "Debug\.NETFramework,Version=v4.0.AssemblyAttributes.obj"
+     1>LINK : fatal error LNK1104: cannot open file 'myo64.lib'
+     1>Done Building Project "C:\Users\Nicholas\Documents\Visual Studio 2010\Projects\JNIJavaMyoLib\JNIJavaMyoLib\JNIJavaMyoLib.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.08
