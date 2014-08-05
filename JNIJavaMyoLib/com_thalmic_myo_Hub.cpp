@@ -52,10 +52,12 @@ JNIEXPORT jobject JNICALL Java_com_thalmic_myo_Hub_waitForMyo(JNIEnv *jenv, jobj
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobject thisObject, jobject deviceListener) {
 	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
 	if (hub != NULL) {
-		jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
-		JniDeviceListener *jniDeviceListener = new JniDeviceListener(jenv, newJavaObject, myoMap);
-		deviceListenerMap[newJavaObject] = jniDeviceListener;
-		hub->addListener(jniDeviceListener);
+		if (deviceListenerMap.count(deviceListener) == 0) {
+			jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
+			JniDeviceListener *jniDeviceListener = new JniDeviceListener(jenv, newJavaObject, myoMap);
+			deviceListenerMap[deviceListener] = jniDeviceListener;
+			hub->addListener(jniDeviceListener);
+		}
 	}
 }
 
@@ -65,12 +67,15 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobjec
 * Signature: (Lcom/thalmic/myo/DeviceListener;)V
 */
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_removeListener(JNIEnv *jenv, jobject thisObject, jobject deviceListener) {
-	//myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
-	//jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
-	//JniDeviceListener *jniDeviceListener = deviceListenerMap[newJavaObject];
-	//if (hub != NULL && jniDeviceListener != NULL) {
-	//	hub->removeListener(jniDeviceListener);
-	//}
+	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
+	if (hub != NULL) {
+		jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
+		JniDeviceListener *jniDeviceListener = deviceListenerMap[deviceListener];
+		if (hub != NULL && jniDeviceListener != NULL) {
+			hub->removeListener(jniDeviceListener);
+			deviceListenerMap.erase(deviceListener);
+		}
+	}
 }
 
 /*
