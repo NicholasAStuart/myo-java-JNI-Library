@@ -1,4 +1,4 @@
-﻿Build started 8/4/2014 9:19:36 PM.
+﻿Build started 8/5/2014 9:45:07 PM.
      1>Project "C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\JNIJavaMyoLib\JNIJavaMyoLib.vcxproj" on node 2 (build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>InitializeBuildStatus:
@@ -22,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.82
+Time Elapsed 00:00:00.87

@@ -4,7 +4,7 @@
 #include <map>
 #include <myo/myo.hpp>
 
-std::map<jobject, JniDeviceListener*> deviceListenerMap;
+std::map<jint, JniDeviceListener*> deviceListenerMap;
 std::map<myo::Myo*, jobject> myoMap;
 
 /*
@@ -49,13 +49,16 @@ JNIEXPORT jobject JNICALL Java_com_thalmic_myo_Hub_waitForMyo(JNIEnv *jenv, jobj
 * Method:    addListener
 * Signature: (Lcom/thalmic/myo/DeviceListener;)V
 */
-JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobject thisObject, jobject deviceListener) {
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobject thisObject, jobject javaDeviceListener) {
 	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
 	if (hub != NULL) {
-		if (deviceListenerMap.count(deviceListener) == 0) {
-			jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
+		jmethodID hashCodeMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "hashCode", "()I");
+		jint javaDeviceListenerHashCode = jenv->CallIntMethod(javaDeviceListener, hashCodeMethodId);
+
+		if (deviceListenerMap.count(javaDeviceListenerHashCode) == 0) {
+			jobject newJavaObject = jenv->NewGlobalRef(javaDeviceListener);
 			JniDeviceListener *jniDeviceListener = new JniDeviceListener(jenv, newJavaObject, myoMap);
-			deviceListenerMap[deviceListener] = jniDeviceListener;
+			deviceListenerMap[javaDeviceListenerHashCode] = jniDeviceListener;
 			hub->addListener(jniDeviceListener);
 		}
 	}
@@ -66,14 +69,16 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobjec
 * Method:    removeListener
 * Signature: (Lcom/thalmic/myo/DeviceListener;)V
 */
-JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_removeListener(JNIEnv *jenv, jobject thisObject, jobject deviceListener) {
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_removeListener(JNIEnv *jenv, jobject thisObject, jobject javaDeviceListener) {
 	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
 	if (hub != NULL) {
-		jobject newJavaObject = jenv->NewGlobalRef(deviceListener);
-		JniDeviceListener *jniDeviceListener = deviceListenerMap[deviceListener];
+		jmethodID hashCodeMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "hashCode", "()I");
+		jint javaDeviceListenerHashCode = jenv->CallIntMethod(javaDeviceListener, hashCodeMethodId);
+
+		JniDeviceListener *jniDeviceListener = deviceListenerMap[javaDeviceListenerHashCode];
 		if (hub != NULL && jniDeviceListener != NULL) {
 			hub->removeListener(jniDeviceListener);
-			deviceListenerMap.erase(deviceListener);
+			deviceListenerMap.erase(javaDeviceListenerHashCode);
 		}
 	}
 }
