@@ -125,6 +125,13 @@ void JniDeviceListener::onPair(myo::Myo* myo, uint64_t timestamp, myo::FirmwareV
 	jenv->CallVoidMethod(javaDeviceListener, onPairMethodId, javaMyo, timestamp, javaFirmwareVersion);
 }
 
+void JniDeviceListener::onUnpair(myo::Myo* myo, uint64_t timestamp) {
+	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+	
+	jmethodID onUnpairMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onUnpair", "(Lcom/thalmic/myo/Myo;J)V");
+	jenv->CallVoidMethod(javaDeviceListener, onUnpairMethodId, javaMyo, timestamp);
+}
+
 void JniDeviceListener::onConnect(myo::Myo* myo, uint64_t timestamp, myo::FirmwareVersion firmwareVersion) {
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 	jobject javaFirmwareVersion = createJavaObjectFromFirmwareVersion(firmwareVersion);

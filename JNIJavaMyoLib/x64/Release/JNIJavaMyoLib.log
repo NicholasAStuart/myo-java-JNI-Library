@@ -1,13 +1,23 @@
-﻿Build started 8/5/2014 9:45:07 PM.
+﻿Build started 8/30/2014 2:31:22 PM.
      1>Project "C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\JNIJavaMyoLib\JNIJavaMyoLib.vcxproj" on node 2 (build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>InitializeBuildStatus:
          Creating "x64\Release\JNIJavaMyoLib.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Nicholas\Downloads\myo-sdk-win-beta1\include" /I"C:\Program Files\Java\jdk1.7.0_55\include" /I"C:\Program Files\Java\jdk1.7.0_55\include\win32" /Zi /nologo /W1 /WX- /O2 /D _WINDLL /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt com_thalmic_myo_Hub.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\Nicholas\Downloads\myo-sdk-win-beta3\include" /I"C:\Program Files\Java\jdk1.7.0_55\include" /I"C:\Program Files\Java\jdk1.7.0_55\include\win32" /Zi /nologo /W1 /WX- /O2 /D _WINDLL /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt com_thalmic_myo_Hub.cpp com_thalmic_myo_Myo.cpp handle.cpp jnidevicelistener.cpp
          com_thalmic_myo_Hub.cpp
+         com_thalmic_myo_Myo.cpp
+         handle.cpp
+         jnidevicelistener.cpp
+     1>jnidevicelistener.cpp(79): warning C4482: nonstandard extension used: enum 'myo::Arm' used in qualified name
+     1>jnidevicelistener.cpp(82): warning C4482: nonstandard extension used: enum 'myo::Arm' used in qualified name
+     1>jnidevicelistener.cpp(85): warning C4482: nonstandard extension used: enum 'myo::Arm' used in qualified name
+     1>jnidevicelistener.cpp(101): warning C4482: nonstandard extension used: enum 'myo::XDirection' used in qualified name
+     1>jnidevicelistener.cpp(104): warning C4482: nonstandard extension used: enum 'myo::XDirection' used in qualified name
+     1>jnidevicelistener.cpp(107): warning C4482: nonstandard extension used: enum 'myo::XDirection' used in qualified name
+         Generating Code...
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.dll" /NOLOGO /LIBPATH:"C:\Users\Nicholas\Downloads\myo-sdk-win-beta1\lib" myo64.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\JNIJavaMyoLib.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.lib" /MACHINE:X64 /DLL x64\Release\com_thalmic_myo_Hub.obj
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.dll" /NOLOGO /LIBPATH:"C:\Users\Nicholas\Downloads\myo-sdk-win-beta3\lib" myo64.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\JNIJavaMyoLib.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nicholas\documents\visual studio 2010\Projects\JNIJavaMyoLib\x64\Release\JNIJavaMyoLib.lib" /MACHINE:X64 /DLL x64\Release\com_thalmic_myo_Hub.obj
          x64\Release\com_thalmic_myo_Myo.obj
          x64\Release\handle.obj
          x64\Release\jnidevicelistener.obj
@@ -22,4 +32,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:02.91
