@@ -1,11 +1,24 @@
-myo-java-JNI-Library
-====================
+# myo-java-JNI-Library
 
 C++/C Files required to build a JNI DLL for the myo-java project.
 
-This project has a Win32 and an x64 build configuration set up, with x64 being the default. 
+## Windows
 
-You will need to ensure that you have 2 Environmental variables set up:
+####There are several environmental variables that need to be set up:
 
-* JAVA_HOME - Points to the base installation of a JDK
-* MYO_HOME - Points to the base of a Myo ZIP. 
+* *JAVA_HOME* - Points to the base installation of a JDK
+* *MYO_HOME* - Points to the base of a Myo ZIP. 
+* *VC* - The base installation of a Visual Studio directory
+
+#### Script to compile
+* *compile64.bat* - 64-bit DLL. This DLL will be located *x64/Release/JNIJavaMyoLib.dll*
+* *compile32.bat* - 32-bit DLL. This DLL will be located *x86/Release/JNIJavaMyoLib.dll*
+
+## OSX
+
+#### There are several environmental variables that need to be set up:
+
+* *MYO_HOME* - Points to the base of a Myo ZIP. 
+
+#### Script to compile:
+* *compile.sh* - 32-bit and 64-bit dynamic library. This JNLIB will be located *libmyo.jnilib*

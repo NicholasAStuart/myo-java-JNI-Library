@@ -1,5 +1,5 @@
 if not defined DevEnvDir (
-	call "%GCC%\vcvarsall.bat" x86_amd64
+	call "%VC%\vcvarsall.bat" x86_amd64
 )
 
 mkdir x64\Release\
