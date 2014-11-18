@@ -147,19 +147,19 @@ void JniDeviceListener::onDisconnect(myo::Myo* myo, uint64_t timestamp) {
 	jenv->CallVoidMethod(javaDeviceListener, onDisconnectMethodId, javaMyo, timestamp);
 }
 
-void JniDeviceListener::onArmRecognized(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection) {
+void JniDeviceListener::onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection) {
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 	jobject javaArm = createJavaObjectFromArm(arm);
 	jobject javaXDirection = createJavaObjectFromXDirection(xDirection);
 
-	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmRecognized", "(Lcom/thalmic/myo/Myo;JLcom/thalmic/myo/enums/Arm;Lcom/thalmic/myo/enums/XDirection;)V");
+	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmSync", "(Lcom/thalmic/myo/Myo;JLcom/thalmic/myo/enums/Arm;Lcom/thalmic/myo/enums/XDirection;)V");
 	jenv->CallVoidMethod(javaDeviceListener, onConnectMethodId, javaMyo, timestamp, javaArm, javaXDirection);
 }
 
-void JniDeviceListener::onArmLost(myo::Myo* myo, uint64_t timestamp) {
+void JniDeviceListener::onArmUnsync(myo::Myo* myo, uint64_t timestamp) {
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 
-	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmLost", "(Lcom/thalmic/myo/Myo;J)V");
+	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmUnsync", "(Lcom/thalmic/myo/Myo;J)V");
 	jenv->CallVoidMethod(javaDeviceListener, onConnectMethodId, javaMyo, timestamp);
 }
 
