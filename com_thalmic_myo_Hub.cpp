@@ -6,6 +6,14 @@
 
 std::map<jint, JniDeviceListener*> deviceListenerMap;
 std::map<myo::Myo*, jobject> myoMap;
+JavaVM *javavm;
+
+jint JNI_OnLoad(JavaVM *vm, void *reserved) {
+	setbuf(stdout, NULL);
+	javavm = vm;
+	return JNI_VERSION_1_6;
+}
+
 
 /*
  * Class:     com_thalmic_myo_Hub
@@ -13,7 +21,6 @@ std::map<myo::Myo*, jobject> myoMap;
  * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_initialize (JNIEnv *jenv, jobject thisObject, jstring applicationIdentifier) {
-	setbuf(stdout, NULL);
 	try {
 		const char* mystring = jenv->GetStringUTFChars(applicationIdentifier, NULL);
 		myo::Hub *hub = new myo::Hub(mystring);
@@ -57,7 +64,7 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_addListener(JNIEnv *jenv, jobjec
 
 		if (deviceListenerMap.count(javaDeviceListenerHashCode) == 0) {
 			jobject newJavaObject = jenv->NewGlobalRef(javaDeviceListener);
-			JniDeviceListener *jniDeviceListener = new JniDeviceListener(jenv, newJavaObject, myoMap);
+			JniDeviceListener *jniDeviceListener = new JniDeviceListener(javavm, newJavaObject, myoMap);
 			deviceListenerMap[javaDeviceListenerHashCode] = jniDeviceListener;
 			hub->addListener(jniDeviceListener);
 		}

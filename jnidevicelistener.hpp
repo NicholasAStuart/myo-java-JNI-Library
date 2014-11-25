@@ -8,9 +8,11 @@
 class JniDeviceListener : public myo::DeviceListener {
 private:
 	jobject javaDeviceListener;
-	JNIEnv *jenv;
+	JavaVM *javavm;
 	std::map<myo::Myo*, jobject> myoMap;
-
+	
+	JNIEnv* getEnvironmentFromVm();
+	
 	template<typename T>
 	jobject createJavaObjectFromQuaternion(const myo::Quaternion<T>&);
 
@@ -27,7 +29,7 @@ private:
 
 	jobject createJavaObjectFromXDirection(myo::XDirection xDirection);
 public:
-	JniDeviceListener(JNIEnv*, jobject , std::map<myo::Myo*, jobject>);
+	JniDeviceListener(JavaVM *, jobject, std::map<myo::Myo*, jobject>);
 
     /// Called when a Myo has been paired.
     void onPair(myo::Myo* myo, uint64_t timestamp, myo::FirmwareVersion firmwareVersion);
