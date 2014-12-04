@@ -118,3 +118,22 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_runOnce(JNIEnv *jenv, jobject th
 		hub->runOnce(duration);
 	}
 }
+
+/*
+ * Class:     com_thalmic_myo_Hub
+ * Method:    setLockingPolicy
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_setLockingPolicy(JNIEnv *jenv, jobject thisObject, jint lockingPolicy) {
+	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
+	try {
+		if (lockingPolicy == 1) {
+			hub->setLockingPolicy(myo::Hub::lockingPolicyNone);
+		} else if (lockingPolicy == 2) {
+			hub->setLockingPolicy(myo::Hub::lockingPolicyStandard);
+		}
+	} catch (const std::exception &e) {
+		jclass exceptionClass = jenv->FindClass("java/lang/RuntimeException");
+		jenv->ThrowNew(exceptionClass, e.what());
+	}
+}

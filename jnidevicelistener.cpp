@@ -55,11 +55,8 @@ jobject JniDeviceListener::createJavaObjectFromPose(myo::Pose pose) {
 		case myo::Pose::fingersSpread:
 			poseType = "FINGERS_SPREAD";
 			break;
-		case myo::Pose::reserved1:
-			poseType = "RESERVED_1";
-			break;
-		case myo::Pose::thumbToPinky:
-			poseType = "THUMB_TO_PINKY";
+		case myo::Pose::doubleTap:
+			poseType = "DOUBLE_TAP";
 			break;
 		case myo::Pose::unknown:
 		default:
@@ -206,6 +203,30 @@ void JniDeviceListener::onArmUnsync(myo::Myo* myo, uint64_t timestamp) {
 	if (thrownException) {
 		jenv->Throw(thrownException);
 	}
+}
+
+void JniDeviceListener::onUnlock(myo::Myo* myo, uint64_t timestamp) {
+        JNIEnv* jenv = getEnvironmentFromVm();
+        jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+
+        jmethodID onUnlockMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onUnlock", "(Lcom/thalmic/myo/Myo;J)V");
+        jenv->CallVoidMethod(javaDeviceListener, onUnlockMethodId, javaMyo, timestamp);
+        jthrowable thrownException = jenv->ExceptionOccurred();
+        if (thrownException) {
+                jenv->Throw(thrownException);
+        }
+}
+
+void JniDeviceListener::onLock(myo::Myo* myo, uint64_t timestamp) {
+        JNIEnv* jenv = getEnvironmentFromVm();
+        jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+
+        jmethodID onLockMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onLock", "(Lcom/thalmic/myo/Myo;J)V");
+        jenv->CallVoidMethod(javaDeviceListener, onLockMethodId, javaMyo, timestamp);
+        jthrowable thrownException = jenv->ExceptionOccurred();
+        if (thrownException) {
+                jenv->Throw(thrownException);
+        }
 }
 
 void JniDeviceListener::onPose(myo::Myo* myo, uint64_t timestamp, myo::Pose pose) {

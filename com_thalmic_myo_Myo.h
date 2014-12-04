@@ -9,6 +9,14 @@ extern "C" {
 #endif
 /*
  * Class:     com_thalmic_myo_Myo
+ * Method:    vibrate
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_vibrate
+  (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_thalmic_myo_Myo
  * Method:    requestRssi
  * Signature: ()V
  */
@@ -17,11 +25,27 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestRssi
 
 /*
  * Class:     com_thalmic_myo_Myo
- * Method:    vibrate
+ * Method:    unlock
  * Signature: (I)V
  */
-JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_vibrate
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_unlock
   (JNIEnv *, jobject, jint);
+
+/*
+ * Class:     com_thalmic_myo_Myo
+ * Method:    lock
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_lock
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_thalmic_myo_Myo
+ * Method:    notifyUserAction
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_notifyUserAction
+  (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }

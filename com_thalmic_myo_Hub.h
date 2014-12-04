@@ -55,6 +55,14 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_run
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_runOnce
   (JNIEnv *, jobject, jint);
 
+/*
+ * Class:     com_thalmic_myo_Hub
+ * Method:    setLockingPolicy
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_setLockingPolicy
+  (JNIEnv *, jobject, jint);
+
 #ifdef __cplusplus
 }
 #endif

@@ -29,12 +29,12 @@ private:
 
 	jobject createJavaObjectFromXDirection(myo::XDirection xDirection);
 public:
-	JniDeviceListener(JavaVM *, jobject, std::map<myo::Myo*, jobject>);
+    JniDeviceListener(JavaVM *, jobject, std::map<myo::Myo*, jobject>);
 
     /// Called when a Myo has been paired.
     void onPair(myo::Myo* myo, uint64_t timestamp, myo::FirmwareVersion firmwareVersion);
 
-	/// Called when a Myo has been unpaired.
+    /// Called when a Myo has been unpaired.
     void onUnpair(myo::Myo* myo, uint64_t timestamp);
 
     /// Called when a paired Myo has been connected.
@@ -48,6 +48,12 @@ public:
 
     /// Called when a paired Myo is moved or removed from the arm.
     void onArmUnsync(myo::Myo* myo, uint64_t timestamp);
+
+    /// Called when a paired Myo becomes unlocked. 
+    void onUnlock(myo::Myo* myo, uint64_t timestamp);
+
+    /// Called when a paired Myo becomes locked. 
+    void onLock(myo::Myo* myo, uint64_t timestamp);
 
     /// Called when a paired Myo has provided a new pose.
     void onPose(myo::Myo* myo, uint64_t timestamp,myo::Pose pose);
