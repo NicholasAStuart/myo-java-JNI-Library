@@ -70,5 +70,9 @@ public:
     /// Called when a paired Myo has provided a new RSSI value.
     /// @see Myo::requestRssi() to request an RSSI value from the Myo.
     void onRssi(myo::Myo* myo, uint64_t timestamp, int8_t rssi);
+
+    /// Called when a paired Myo has provided new EMG data.
+    /// emg is an array of 8 elements, each corresponding to one sensor.
+    void onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg);
 };
 #endif

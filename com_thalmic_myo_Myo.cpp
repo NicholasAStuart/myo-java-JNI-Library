@@ -88,4 +88,16 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_notifyUserAction(JNIEnv *jenv, j
         }
 }
 
-
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_setStreamEmg(JNIEnv *jenv, jobject thisObject, jint streamEmgType) {
+        myo::Myo *myo = getHandle<myo::Myo>(jenv, thisObject);
+        try {
+                if (streamEmgType == 1) {
+                        myo->setStreamEmg(myo::Myo::streamEmgDisabled);
+                } else if (streamEmgType == 2) {
+                        myo->setStreamEmg(myo::Myo::streamEmgEnabled);
+                }
+        } catch (const std::exception &e) {
+                jclass exceptionClass = jenv->FindClass("java/lang/RuntimeException");
+                jenv->ThrowNew(exceptionClass, e.what());
+        }
+}

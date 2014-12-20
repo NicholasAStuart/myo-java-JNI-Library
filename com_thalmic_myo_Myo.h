@@ -47,6 +47,14 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_lock
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_notifyUserAction
   (JNIEnv *, jobject);
 
+/*
+ * Class:     com_thalmic_myo_Myo
+ * Method:    setStreamEmg
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_setStreamEmg
+  (JNIEnv *, jobject, jint);
+
 #ifdef __cplusplus
 }
 #endif

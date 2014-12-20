@@ -285,12 +285,25 @@ void JniDeviceListener::onRssi(myo::Myo* myo, uint64_t timestamp, int8_t rssi) {
 	JNIEnv* jenv = getEnvironmentFromVm();
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 
-	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onRssi", "(Lcom/thalmic/myo/Myo;JI)V");
-	jenv->CallVoidMethod(javaDeviceListener, onConnectMethodId, javaMyo, timestamp, rssi);
+	jmethodID onRssiMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onRssi", "(Lcom/thalmic/myo/Myo;JI)V");
+	jenv->CallVoidMethod(javaDeviceListener, onRssiMethodId, javaMyo, timestamp, rssi);
 	jthrowable thrownException = jenv->ExceptionOccurred();
 	if (thrownException) {
 		jenv->Throw(thrownException);
 	}
+}
+
+void JniDeviceListener::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg) {
+	std::cout << "CAlling onEmgData";
+        JNIEnv* jenv = getEnvironmentFromVm();
+        jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+
+        jmethodID onEmgMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onEmgData", "(Lcom/thalmic/myo/Myo;J[B)V");
+        jenv->CallVoidMethod(javaDeviceListener, onEmgMethodId, javaMyo, timestamp, emg);
+        jthrowable thrownException = jenv->ExceptionOccurred();
+        if (thrownException) {
+                jenv->Throw(thrownException);
+        }
 }
 
 jobject JniDeviceListener::createOrRetrieveMyoJavaObject(myo::Myo *myo) {
