@@ -127,9 +127,9 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_runOnce(JNIEnv *jenv, jobject th
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Hub_setLockingPolicy(JNIEnv *jenv, jobject thisObject, jint lockingPolicy) {
 	myo::Hub *hub = getHandle<myo::Hub>(jenv, thisObject);
 	try {
-		if (lockingPolicy == 1) {
+		if (lockingPolicy == 0) {
 			hub->setLockingPolicy(myo::Hub::lockingPolicyNone);
-		} else if (lockingPolicy == 2) {
+		} else if (lockingPolicy == 1) {
 			hub->setLockingPolicy(myo::Hub::lockingPolicyStandard);
 		}
 	} catch (const std::exception &e) {

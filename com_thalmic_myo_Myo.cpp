@@ -26,11 +26,11 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestRssi(JNIEnv *jenv, jobjec
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_vibrate(JNIEnv *jenv, jobject thisObject, jint vibrationType) {
 	myo::Myo *myo = getHandle<myo::Myo>(jenv, thisObject);
 	try {
-		if (vibrationType == 1) {
+		if (vibrationType == 0) {
 			myo->vibrate(myo::Myo::vibrationShort);
-		} else if (vibrationType == 2) {
+		} else if (vibrationType == 1) {
 			myo->vibrate(myo::Myo::vibrationMedium);
-		} else if (vibrationType == 3) {
+		} else if (vibrationType == 2) {
 			myo->vibrate(myo::Myo::vibrationLong);
 		}
 	} catch (const std::exception &e) {
@@ -47,9 +47,9 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_vibrate(JNIEnv *jenv, jobject th
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_unlock(JNIEnv *jenv, jobject thisObject, jint unlockType) {
 	myo::Myo *myo = getHandle<myo::Myo>(jenv, thisObject);
         try {
-                if (unlockType == 1) {
+                if (unlockType == 0) {
                         myo->unlock(myo::Myo::unlockTimed);
-                } else if (unlockType == 2) {
+                } else if (unlockType == 1) {
                         myo->unlock(myo::Myo::unlockHold);
                 }
         } catch (const std::exception &e) {
@@ -91,9 +91,9 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_notifyUserAction(JNIEnv *jenv, j
 JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_setStreamEmg(JNIEnv *jenv, jobject thisObject, jint streamEmgType) {
         myo::Myo *myo = getHandle<myo::Myo>(jenv, thisObject);
         try {
-                if (streamEmgType == 1) {
+                if (streamEmgType == 0) {
                         myo->setStreamEmg(myo::Myo::streamEmgDisabled);
-                } else if (streamEmgType == 2) {
+                } else if (streamEmgType == 1) {
                         myo->setStreamEmg(myo::Myo::streamEmgEnabled);
                 }
         } catch (const std::exception &e) {
