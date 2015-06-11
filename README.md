@@ -4,6 +4,8 @@ C++/C Files required to build a JNI DLL for the myo-java project.
 
 ## Windows
 
+** *MSVCP100.dll is required, install as part of VC++, Not sure about other methods.* **
+
 ####There are several environmental variables that need to be set up:
 
 * *JAVA_HOME* - Points to the base installation of a JDK
