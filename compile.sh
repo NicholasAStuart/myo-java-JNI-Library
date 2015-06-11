@@ -1,6 +1,6 @@
 export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 
-g++ -arch x86_64 -arch i386 -c \
+g++ -arch x86_64 -c \
 -I $JAVA_HOME/include \
 -I $JAVA_HOME/include/darwin \
 -F $MYO_HOME \
@@ -9,7 +9,7 @@ g++ -arch x86_64 -arch i386 -c \
 	handle.cpp \
 	jnidevicelistener.cpp 
 
-g++ -dynamiclib -arch x86_64 -arch i386 \
+g++ -dynamiclib -arch x86_64  \
 -Wl,-rpath,@loader_path \
 -F $MYO_HOME -framework myo -framework JavaVM -o libmyo.jnilib \
 	com_thalmic_myo_Myo.o \

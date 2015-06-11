@@ -129,6 +129,52 @@ jobject JniDeviceListener::createJavaObjectFromXDirection(myo::XDirection xDirec
 	return javaXDirectionObject;
 }
 
+jobject JniDeviceListener::createJavaObjectFromWarmupResult(myo::WarmupResult warmupResult) {
+	std::string warmupResultType;
+	switch(warmupResult) {
+		case myo::warmupResultSuccess:
+			warmupResultType = "WARMUP_RESULT_SUCCESS";
+			break;
+		case myo::warmupResultFailedTimeout:
+			warmupResultType = "WARMUP_RESULT_FAILED_TIMEOUT";
+			break;
+		case myo::warmupResultUnknown:
+		default:
+			warmupResultType = "WARMUP_RESULT_UNKNOWN";
+			break;
+	};
+
+	JNIEnv* jenv = getEnvironmentFromVm();
+	jclass warmupResultClass = jenv->FindClass("com/thalmic/myo/enums/WarmupResult");
+	jfieldID warmupResultFieldID = jenv->GetStaticFieldID(warmupResultClass,  warmupResultType.c_str(), "Lcom/thalmic/myo/enums/WarmupResult;");
+	jobject javaWarmupResultObject = jenv->GetStaticObjectField(warmupResultClass, warmupResultFieldID);
+
+	return javaWarmupResultObject;
+}
+
+jobject JniDeviceListener::createJavaObjectFromWarmupState(myo::WarmupState warmupState) {
+	std::string warmupStateType;
+	switch(warmupState) {
+		case myo::warmupStateCold:
+			warmupStateType = "WARMUP_STATE_COLD";
+			break;
+		case myo::warmupStateWarm:
+			warmupStateType = "WARMUP_STATE_WARM";
+			break;
+		case myo::warmupStateUnknown:
+		default:
+			warmupStateType = "WARMUP_STATE_UNKNOWN";
+			break;
+	};
+
+	JNIEnv* jenv = getEnvironmentFromVm();
+	jclass warmupStateClass = jenv->FindClass("com/thalmic/myo/enums/WarmupState");
+	jfieldID warmupStateFieldID = jenv->GetStaticFieldID(warmupStateClass,  warmupStateType.c_str(), "Lcom/thalmic/myo/enums/WarmupState;");
+	jobject javaWarmupStateObject = jenv->GetStaticObjectField(warmupStateClass, warmupStateFieldID);
+
+	return javaWarmupStateObject;
+}
+
 void JniDeviceListener::onPair(myo::Myo* myo, uint64_t timestamp, myo::FirmwareVersion firmwareVersion) {
 	JNIEnv* jenv = getEnvironmentFromVm();
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
@@ -179,14 +225,15 @@ void JniDeviceListener::onDisconnect(myo::Myo* myo, uint64_t timestamp) {
 	}
 }
 
-void JniDeviceListener::onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection) {
+void JniDeviceListener::onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection, myo::WarmupState warmupState) {
 	JNIEnv* jenv = getEnvironmentFromVm();
 	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 	jobject javaArm = createJavaObjectFromArm(arm);
 	jobject javaXDirection = createJavaObjectFromXDirection(xDirection);
+	jobject javaWarmupState = createJavaObjectFromWarmupState(warmupState);
 
-	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmSync", "(Lcom/thalmic/myo/Myo;JLcom/thalmic/myo/enums/Arm;Lcom/thalmic/myo/enums/XDirection;)V");
-	jenv->CallVoidMethod(javaDeviceListener, onConnectMethodId, javaMyo, timestamp, javaArm, javaXDirection);
+	jmethodID onConnectMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onArmSync", "(Lcom/thalmic/myo/Myo;JLcom/thalmic/myo/enums/Arm;Lcom/thalmic/myo/enums/XDirection;Lcom/thalmic/myo/enums/WarmupState;)V");
+	jenv->CallVoidMethod(javaDeviceListener, onConnectMethodId, javaMyo, timestamp, javaArm, javaXDirection, javaWarmupState);
 	jthrowable thrownException = jenv->ExceptionOccurred();
 	if (thrownException) {
 		jenv->Throw(thrownException);
@@ -293,9 +340,21 @@ void JniDeviceListener::onRssi(myo::Myo* myo, uint64_t timestamp, int8_t rssi) {
 	}
 }
 
+void JniDeviceListener::onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level) {
+	JNIEnv* jenv = getEnvironmentFromVm();
+	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+
+	jmethodID onBatteryLevelReceivedMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onBatteryLevelReceived", "(Lcom/thalmic/myo/Myo;JI)V");
+	jenv->CallVoidMethod(javaDeviceListener, onBatteryLevelReceivedMethodId, javaMyo, timestamp, level);
+	jthrowable thrownException = jenv->ExceptionOccurred();
+	if(thrownException) {
+		jenv->Throw(thrownException);
+	}
+}
+
 void JniDeviceListener::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg) {
-        JNIEnv* jenv = getEnvironmentFromVm();
-        jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+    JNIEnv* jenv = getEnvironmentFromVm();
+    jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
 	jbyteArray jEmgData = jenv->NewByteArray(8);
 	jenv->SetByteArrayRegion(jEmgData, 0, 8, emg);
 
@@ -305,6 +364,19 @@ void JniDeviceListener::onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_
         if (thrownException) {
                 jenv->Throw(thrownException);
         }
+}
+
+void JniDeviceListener::onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, myo::WarmupResult warmupResult) {
+	JNIEnv* jenv = getEnvironmentFromVm();
+	jobject javaMyo = createOrRetrieveMyoJavaObject(myo);
+	jobject javaWarmupResultObject = createJavaObjectFromWarmupResult(warmupResult);
+
+	jmethodID onWarmupCompletedMethodId = jenv->GetMethodID(jenv->GetObjectClass(javaDeviceListener), "onWarmupCompleted", "(Lcom/thalmic/myo/Myo;JLcom/thalmic/myo/enums/WarmupResult;)V");
+	jenv->CallVoidMethod(javaDeviceListener, onWarmupCompletedMethodId, javaMyo, timestamp, javaWarmupResultObject);
+	jthrowable thrownException = jenv->ExceptionOccurred();
+	if(thrownException) {
+		jenv->Throw(thrownException);
+	}	
 }
 
 jobject JniDeviceListener::createOrRetrieveMyoJavaObject(myo::Myo *myo) {

@@ -25,6 +25,14 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestRssi
 
 /*
  * Class:     com_thalmic_myo_Myo
+ * Method:    requestBatteryLevel
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestBatteryLevel
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_thalmic_myo_Myo
  * Method:    unlock
  * Signature: (I)V
  */

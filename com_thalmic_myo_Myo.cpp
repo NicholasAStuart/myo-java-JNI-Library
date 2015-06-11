@@ -17,6 +17,20 @@ JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestRssi(JNIEnv *jenv, jobjec
 	}
 }
 
+/*
+ * Class:     com_thalmic_myo_Myo
+ * Method:    requestBatteryLevel
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_thalmic_myo_Myo_requestBatteryLevel(JNIEnv *jenv, jobject thisObject) {
+        myo::Myo *myo = getHandle<myo::Myo>(jenv, thisObject);
+        try {
+                myo->requestBatteryLevel();
+        } catch (const std::exception &e) {
+                jclass exceptionClass = jenv->FindClass("java/lang/RuntimeException");
+                jenv->ThrowNew(exceptionClass, e.what());
+        }
+}
 
 /*
  * Class:     com_thalmic_myo_Myo

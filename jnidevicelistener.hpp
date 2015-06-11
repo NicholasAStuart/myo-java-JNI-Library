@@ -28,6 +28,10 @@ private:
 	jobject createJavaObjectFromArm(myo::Arm arm);
 
 	jobject createJavaObjectFromXDirection(myo::XDirection xDirection);
+
+    jobject createJavaObjectFromWarmupResult(myo::WarmupResult warmupResult);
+
+    jobject createJavaObjectFromWarmupState(myo::WarmupState warmupState);
 public:
     JniDeviceListener(JavaVM *, jobject, std::map<myo::Myo*, jobject>);
 
@@ -44,7 +48,7 @@ public:
     void onDisconnect(myo::Myo* myo, uint64_t timestamp);
 
     /// Called when a paired Myo recognizes that it is on an arm.
-    void onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection);
+    void onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection, myo::WarmupState warmupState);
 
     /// Called when a paired Myo is moved or removed from the arm.
     void onArmUnsync(myo::Myo* myo, uint64_t timestamp);
@@ -71,8 +75,14 @@ public:
     /// @see Myo::requestRssi() to request an RSSI value from the Myo.
     void onRssi(myo::Myo* myo, uint64_t timestamp, int8_t rssi);
 
+    /// Called when a paired Myo receives an battery level update.
+    void onBatteryLevelReceived(myo::Myo* myo, uint64_t timestamp, uint8_t level);
+
     /// Called when a paired Myo has provided new EMG data.
     /// emg is an array of 8 elements, each corresponding to one sensor.
     void onEmgData(myo::Myo* myo, uint64_t timestamp, const int8_t* emg);
+    
+    /// Called when the warmup period for a Myo has completed.
+    void onWarmupCompleted(myo::Myo* myo, uint64_t timestamp, myo::WarmupResult warmupResult);
 };
 #endif
