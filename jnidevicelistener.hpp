@@ -32,6 +32,8 @@ private:
     jobject createJavaObjectFromWarmupResult(myo::WarmupResult warmupResult);
 
     jobject createJavaObjectFromWarmupState(myo::WarmupState warmupState);
+	
+	void throwJavaException(JNIEnv* jenv);
 public:
     JniDeviceListener(JavaVM *, jobject, std::map<myo::Myo*, jobject>);
 
@@ -48,7 +50,7 @@ public:
     void onDisconnect(myo::Myo* myo, uint64_t timestamp);
 
     /// Called when a paired Myo recognizes that it is on an arm.
-    void onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection, myo::WarmupState warmupState);
+    void onArmSync(myo::Myo* myo, uint64_t timestamp, myo::Arm arm, myo::XDirection xDirection, float rotation, myo::WarmupState warmupState);
 
     /// Called when a paired Myo is moved or removed from the arm.
     void onArmUnsync(myo::Myo* myo, uint64_t timestamp);
